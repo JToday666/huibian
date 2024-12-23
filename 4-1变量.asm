@@ -31,7 +31,9 @@ again:
     sub bx, num2
     jmp again
 next:
-    
+    xchg bx, num2
+    mov num1, bx
+    call GCD
 done:
     ret
     ;;//TEMPLATE END
@@ -41,6 +43,33 @@ GCD endp
 print_num proc 
     ;;//TEMPLATE BEGIN
     ;;//书写代码
+    push ax
+    push bx
+    push cx
+    push dx
+    mov cx, 10
+    mov ax, dx
+    div cl
+    xor dx, dx
+    xor bx, bx
+    mov dl, al
+    mov bl, ah
+    push bx
+    cmp dx, 0
+    je next1
+    call print_num
+next1:
+    pop bx
+    mov dx, bx
+    add dx, '0'
+    mov ah, 02h
+    int 21h
+
+    pop dx
+    pop cx
+    pop bx
+    pop ax
+    ret
     ;;//TEMPLATE END
 print_num endp
 
