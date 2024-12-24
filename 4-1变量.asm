@@ -47,7 +47,7 @@ print_num proc
     push bx
     push cx
     push dx
-    mov cx, 10
+    mov cx, 8           ;; 除数
     mov ax, dx
     div cl
     xor dx, dx
@@ -60,16 +60,19 @@ print_num proc
     call print_num
 next1:
     pop bx
-    mov dx, bx
-    add dx, '0'
-    mov ah, 02h
+    mov ax, bx
+    mov bx, offset ascii
+    xlat ascii
+    mov dl, al
+    mov ah, 2
     int 21h
-
     pop dx
     pop cx
     pop bx
     pop ax
     ret
+    
+ascii db  30h, 31h, 32h, 33h, 34h, 35h, 36h, 37h, 38h, 39h, 41h, 42h, 43h, 44h, 45h, 46h
     ;;//TEMPLATE END
 print_num endp
 
